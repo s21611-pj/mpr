@@ -23,23 +23,20 @@ public class PlayerService {
     }
 
     public Optional<Player> findById(Long id) {
-        List<Player> players = new ArrayList<>();
-        players.add(new Player(1L,"Wojtek",100, 10, 5));
-        players.add(new Player(2L,"Jasiu",100, 10, 5));
-        players.add(new Player(3L,"Stachu",100, 10, 5));
+        return playerRepository.findById(id);
+    }
 
-        players.forEach(player -> {
-            player.setMana(10);
-        });
+    public void delete(Long id){
+        playerRepository.deleteById(id);
+    }
 
-        return players.stream().filter(player -> player.getId().equals(id)).findFirst();
-
-//        for(Player player : players) {
-//            if(player.getId() == id) {
-//                return player;
-//            }
-//        }
-//        return new Player();
+    public Player update(Long id, Player updatedPlayer) {
+        updatedPlayer.setId(id);
+        if(findById(updatedPlayer.getId()).isPresent()) {
+            return playerRepository.save(updatedPlayer);
+        } else {
+            return null;
+        }
     }
 
     public Player save(Player player) {
