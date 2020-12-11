@@ -8,21 +8,27 @@ import java.util.Optional;
 
 @Service
 public class DamageService {
-    private PlayerService playerService;
 
-//    public DamageService(PlayerService playerService) {
-//        this.playerService = playerService;
+
+    private PlayerRepository playerRepository;
+
+//    public DamageService() {
+//
 //    }
+
+    public DamageService(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
+
 
 
     public Player damage(Long idAttack, Long idVictim) {
-        Optional<Player> victim = playerService.findById(idVictim);
-        Optional<Player> attacker = playerService.findById(idAttack);
+        Optional<Player> attacker = playerRepository.findById(idAttack);
+        Optional<Player> victim = playerRepository.findById(idVictim);
 
         if(attacker.isPresent() && victim.isPresent()) {
             victim.get().setHealth(victim.get().getHealth() - attacker.get().getAttack());
-
-            return playerService.save(victim.get());
+            return playerRepository.save(victim.get());
         } else {
             return null;
         }

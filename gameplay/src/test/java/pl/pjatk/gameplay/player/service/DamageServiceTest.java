@@ -2,12 +2,14 @@ package pl.pjatk.gameplay.player.service;
 
 import org.junit.jupiter.api.Test;
 import pl.pjatk.gameplay.model.Player;
+import pl.pjatk.gameplay.repository.PlayerRepository;
 import pl.pjatk.gameplay.service.DamageService;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class DamageServiceTest {
-    private final DamageService damageService = new DamageService();
+
+    private final DamageService damageService = new DamageService(null);
 
     @Test
     void shouldMakeMoreAttack(){
@@ -16,7 +18,7 @@ class DamageServiceTest {
         //when
         damageService.morePowerOfAttack(player, 30);
         //then
-        assertThat(player.getAttack()).isEqualTo(30);
+        assertThat(player.getAttack()).isEqualTo(130);
     }
 
     @Test
@@ -24,7 +26,7 @@ class DamageServiceTest {
         //given
         Player player = new Player("test player", 100, 100, 10);
         //when
-        damageService.morePowerOfAttack(player, 0);
+        damageService.morePowerOfAttack(player, -100);
         //then
         assertThat(player.getAttack()).isZero();
     }
